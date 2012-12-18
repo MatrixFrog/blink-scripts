@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import subprocess
+import blink
 import time
 import urllib2
 
@@ -17,18 +17,11 @@ def getTreeStatus():
 def showTreeStatus():
   status = getTreeStatus()
   if status == 'open':
-    shine(0x00, 0xff, 0x00)
+    blink.shine(0x00, 0xff, 0x00)
   elif status == 'closed':
-    shine(0xff, 0x00, 0x00)
+    blink.shine(0xff, 0x00, 0x00)
   else:
-    shine(0xff, 0xff, 0x00)
-
-def shine(r, g, b):
-  """Make blink(1) shine in the given color."""
-  subprocess.call(['blink1-tool', '--rgb', ','.join(map(str, [r, g, b]))])
-
-def off():
-  subprocess.call(['blink1-tool', '--off'])
+    blink.shine(0xff, 0xff, 0x00)
 
 def main():
   try:
@@ -36,7 +29,7 @@ def main():
       showTreeStatus()
       time.sleep(60)
   except KeyboardInterrupt:
-    off()
+    blink.off()
 
 if __name__ == '__main__':
   main()
